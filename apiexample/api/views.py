@@ -24,3 +24,22 @@ class RecipeUpdateView(generics.RetrieveUpdateAPIView):
 class RecipeDeleteView(generics.DestroyAPIView):    
     queryset = Recipes.objects.all()
     serializer_class = RecipesSerializer
+
+
+class RecipeSearchviewset(generics.ListAPIView):
+    queryset = Recipes.objects.all()
+    serializer_class = RecipesSerializer
+
+    def get_queryset(self):
+        name = self.kwargs['name']
+        return Recipes.objects.filter(name__icontains=name)
+    
+
+# def create_recipe(request):
+#     if request.method == 'POST':
+#         form = RecipesForm(request.POST, request.FILES)
+#         if form.is_valid():
+#             form.save()
+#     else:
+#         form = RecipesForm()
+#     return render(request, 'create_recipe.html', {'form': form})    
