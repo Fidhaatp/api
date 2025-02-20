@@ -57,22 +57,14 @@ def create_recipe(request):
                     'vegitarian': recipe.vegitarian,
                     'description': recipe.description
                 }
+                files = {'recipe_img': request.FILES['recipe_img']}
                 
-                files = {}
-                if recipe.recipe_img:  # Ensure an image was uploaded
-                    image_path = recipe.recipe_img.path  # Get full file path
-                    files['recipe_img'] = open(image_path, 'rb')  # Open file in    binary mode
-
                 response = requests.post(api_url, data=data, files=files)
-
-                # Close the file after sending
-                if 'recipe_img' in files:
-                    files['recipe_img'].close()
 
                 if response.status_code == 201:
                     messages.success(request, 'Recipe created successfully!')
                 else:
-                    messages.error(request, f'Error {response.status_code}: {response.text}')
+                    messages.error(request, f'Error {response.status_code}')
 
                 return redirect('index')  # Redirect to home page
 
@@ -82,7 +74,7 @@ def create_recipe(request):
     else:
         form = RecipesForm()
 
-    return render(request, 'create_recipe.html', {'form': form})
+    return render(request, 'create_recipe.html', {'form': form})    
 
 
 def update_detail(request, id):
@@ -143,9 +135,8 @@ def index(request):
                 data = []
         except requests.RequestException:
             data = []
-
         return render(request, 'index.html', {'recipes': data})
-
+        
     else:
         api_url = 'http://127.0.0.1:8000/create/'
         try:

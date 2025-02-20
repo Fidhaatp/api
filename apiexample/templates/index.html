@@ -24,7 +24,7 @@
     <div class="banner-content">
         <h1>Welcome to MyWebsite</h1>
         <p>Your one-stop solution for modern web design.</p>
-        <a href="{% url 'create_recipe' %}" class="btn">Craate Recipe</a>
+        <a href="{% url 'create_recipe' %}" class="btn">Create Recipe</a>
     </div>
 </section>
 
@@ -35,17 +35,12 @@
         <div class="col-lg-4 col-md-6 mt-5">
             <div class="card recipe-card-alt h-100 shadow-lg border-0 ">
                 <div class="card-img-container-alt position-relative">
-                    {% if recipe.recipe_img %}
-                    <img src="{{ recipe.recipe_img.url }}" class="card-img-top" alt="{{ recipe.name }}">
-
-                    {% else %}
-                    <p>No image available</p>
-                    {% endif %}
+                    <img src="{{ recipe.recipe_img|default:'default_image.jpg' }}" class="card-img-top" alt="{{ recipe.name }}">
 
                     <div class="overlay"></div>
                     <div class="recipe-info">
                         <span class="badge rounded-pill bg-secondary text-light p-3"><i class="fas fa-clock me-1"></i>
-                            {{ recipe.prep_time }} min</span>
+                            {{ recipe.prep_time }} min</span>   
                         <span class="badge rounded-pill text-light
                             {% if recipe.difficulty == 1 %} bg-success p-3
                             {% elif recipe.difficulty == 2 %} bg-warning text-light p-3 
@@ -59,7 +54,6 @@
                         </span>
                     </div>
                 </div>
-
                 <div class="card-body text-center">
                     <h5 class="card-title fw-bold">{{ recipe.name }}</h5>
                     <p class="card-text">
@@ -88,6 +82,26 @@
     </div>
 </section>
 
+<br>
+<!-- Pagination -->
+<div class="d-flex justify-content-center mt-4">
+    <nav aria-label="Page navigation">
+        <ul class="pagination">
+            {% if recipes.has_previous %}
+            <li class="page-item"><a class="page-link" href="?page=1">First</a></li>
+            <li class="page-item"><a class="page-link" href="?page={{ recipes.previous_page_number }}">Previous</a></li>
+            {% endif %}
 
+            <li class="page-item active"><a class="page-link" href="#">{{ recipes.number }}</a></li>
+
+            {% if recipes.has_next %}
+            <li class="page-item"><a class="page-link" href="?page={{ recipes.next_page_number }}">Next</a></li>
+            <li class="page-item"><a class="page-link" href="?page={{ recipes.paginator.num_pages }}">Last</a></li>
+            {% endif %}
+        </ul>
+    </nav>
+</div>
+
+<br>
 
 {% endblock content %}
