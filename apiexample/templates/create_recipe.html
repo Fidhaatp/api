@@ -1,0 +1,113 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-sm rounded-3 border-0">
+                <div class="card-body p-4 p-md-5">
+                    <h2 class="text-center mb-4 fw-bold text-dark">Create a New Recipe</h2>
+
+                    <!-- Recipe Form -->
+                    <form method="post" enctype="multipart/form-data" class="needs-validation" novalidate>
+                        {% csrf_token %}
+
+                        <!-- Recipe Name -->
+                        <div class="mb-4">
+                            <label for="name" class="form-label fw-medium text-muted">Recipe Name</label>
+                            <input type="text" id="name" name="name" class="form-control form-control-lg rounded-2" placeholder="Enter recipe name" required>
+                            <div class="invalid-feedback">Please provide a recipe name.</div>
+                        </div>
+
+                        <!-- Preparation Time -->
+                        <div class="mb-4">
+                            <label for="prep_time" class="form-label fw-medium text-muted">Preparation Time (in minutes)</label>
+                            <input type="number" id="prep_time" name="prep_time" class="form-control form-control-lg rounded-2" placeholder="e.g., 30" required>
+                            <div class="invalid-feedback">Please provide the preparation time.</div>
+                        </div>
+
+                        <!-- Image Upload -->
+                        <div class="mb-4">
+                            <label for="recipe_img" class="form-label fw-medium text-muted">Upload Image</label>
+                            <input type="file" id="recipe_img" name="recipe_img" class="form-control form-control-lg rounded-2" required style="border:none;">
+                            <div class="invalid-feedback">Please upload an image.</div>
+                        </div>
+
+                        <!-- Difficulty -->
+                        <div class="mb-4">
+                            <label for="difficulty" class="form-label fw-medium text-muted">Difficulty</label>
+                            <select id="difficulty" name="difficulty" class="form-select form-select-lg rounded-2" required>
+                                <option value="" disabled selected>Select difficulty</option>
+                                <option value="1">Easy</option>
+                                <option value="2">Medium</option>
+                                <option value="3">Hard</option>
+                            </select>
+                            <div class="invalid-feedback">Please select a difficulty level.</div>
+                        </div>
+
+                        <!-- Vegetarian Checkbox -->
+                        <div class="form-check mb-4">
+                            <input type="checkbox" id="vegitarian" name="vegitarian" class="form-check-input">
+                            <label for="vegitarian" class="form-check-label fw-medium text-muted">Vegetarian</label>
+                        </div>
+
+                        <!-- Description -->
+                        <div class="mb-4">
+                            <label for="description" class="form-label fw-medium text-muted">Description</label>
+                            <textarea id="description" name="description" class="form-control form-control-lg rounded-2" rows="4" placeholder="Describe your recipe..." required></textarea>
+                            <div class="invalid-feedback">Please provide a description.</div>
+                        </div>
+
+                        <!-- Submit Button -->
+                        <div class="text-center mt-5">
+                            <button type="submit" class="btn btn-dark btn-lg px-5 rounded-2 fw-bold">Create Recipe</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    /* Custom CSS for minimalist design */
+    .card {
+        background: #ffffff;
+        border: 1px solid #e0e0e0;
+    }
+
+    .form-control, .form-select, .form-check-input {
+        border: 1px solid #e0e0e0;
+        transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .form-control:focus, .form-select:focus {
+        border-color: #6c757d;
+        box-shadow: 0 0 0 0.2rem rgba(60, 61, 63, 0.1);
+    }
+
+    .btn-dark {
+        background-color: #2c3e50;
+        border: none;
+        transition: background-color 0.3s ease;
+    }
+
+    .btn-dark:hover {
+        background-color: #1a252f;
+    }
+
+    .text-muted {
+        color: #6c757d !important;
+    }
+
+    .rounded-2 {
+        border-radius: 8px !important;
+    }
+
+    .shadow-sm {
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    }
+</style>
+
+{% endblock content %}
