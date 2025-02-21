@@ -135,8 +135,9 @@ def index(request):
                 data = []
         except requests.RequestException:
             data = []
+
         return render(request, 'index.html', {'recipes': data})
-        
+
     else:
         api_url = 'http://127.0.0.1:8000/create/'
         try:

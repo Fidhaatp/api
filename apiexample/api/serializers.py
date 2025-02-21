@@ -9,7 +9,7 @@ from rest_framework import serializers
 
 
 class RecipesSerializer(serializers.ModelSerializer):
-    recipe_img = serializers.SerializerMethodField()
+    # recipe_img = serializers.SerializerMethodField(required=False)
 
     def get_recipe_img(self, obj):
         request = self.context.get('request')
@@ -19,4 +19,4 @@ class RecipesSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Recipes
-        fields = ['id', 'name', 'recipe_img']
+        fields = '__all__'
